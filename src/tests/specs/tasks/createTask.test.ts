@@ -2,6 +2,7 @@ import { describe, it } from "vitest";
 import { request } from "../../setupFiles";
 import { taskDefaultExpects } from "../../utils/taskDefaultExpects";
 import { invalidDataTask, task, taskWithInvalidCategory } from "../../mocks/tasks.mocks";
+import { prisma } from "../../../database/prisma"; 
 
 describe("create task", () => {
    it("should be able to create task sucessfully", async () => {
@@ -26,3 +27,4 @@ describe("create task", () => {
       await request.post("/tasks").send(invalidDataTask).expect(400);
    })
 });
+
