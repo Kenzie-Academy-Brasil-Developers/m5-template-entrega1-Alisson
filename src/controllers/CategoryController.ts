@@ -16,4 +16,4 @@ export class CategoryController {
         await this.categoryServices.delete(Number(categoryId));
         return res.status(204).json();
     };
-}
+};

@@ -42,6 +42,12 @@ class EnsureMiddleware {
         const foundCategory = await prisma.category.findFirst({
             where: { id: Number(categoryId) },
         });
+
+        if (!foundCategory) {
+            throw new AppError("Category not found", 404);
+        }
+
+        return next();
     }
 
     public categoryIdBody = async (
@@ -58,10 +64,10 @@ class EnsureMiddleware {
       
         if (!foundCategory) {
           throw new AppError("Category not found", 404);
-        }
+        };
       
         return next();
-};
+    };
 }
 
 export const ensureMiddleware = new EnsureMiddleware();

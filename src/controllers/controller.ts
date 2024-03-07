@@ -7,11 +7,10 @@ import { AppError } from "../errors/AppError";
 export class TaskController {
     private taskService: TaskService = new TaskService();
 
-
 public create = async (req: Request, res: Response): Promise<Response> => {
     const newTask = await this.taskService.create(req.body);
     return res.status(201).json(newTask);
-}
+};
 
 public read = async (
     { query }: Request,
