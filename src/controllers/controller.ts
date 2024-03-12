@@ -1,14 +1,12 @@
 import { Response, Request, NextFunction } from "express"; 
 import { TaskService } from "../services/TaskService";
-import { prisma } from "../database/prisma";
-import { AppError } from "../errors/AppError";
-
 
 export class TaskController {
     private taskService: TaskService = new TaskService();
 
 public create = async (req: Request, res: Response): Promise<Response> => {
-    const newTask = await this.taskService.create(req.body);
+    const userId = Number(res.locals.sub);
+    const newTask = await this.taskService.create(req.body, userId);
     return res.status(201).json(newTask);
 };
 
@@ -16,8 +14,10 @@ public read = async (
     { query }: Request,
     res: Response 
 ): Promise<Response> => {
+    const userId = Number(res.locals.sub);
+
     const category = query.category ? String(query.category) : undefined;
-    const allTasks = await this.taskService.read(category);
+    const allTasks = await this.taskService.read(userId, category);
 
     return res.status(200).json(allTasks);
 };

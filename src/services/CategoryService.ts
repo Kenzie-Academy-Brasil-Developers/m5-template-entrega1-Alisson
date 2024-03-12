@@ -1,14 +1,16 @@
 import { Category } from "@prisma/client";
-import { CategoryCreate } from "../interfaces/category.interfaces";
 import { prisma } from "../database/prisma";
-import { category } from "../tests/mocks/category.mocks";
+import { CategoryCreate } from "../interfaces/category.interfaces";
 
 export class CategoryService {
-    public create = async (payload: CategoryCreate): Promise<Category> => {
-        return await prisma.category.create({ data: payload });
+    public create = async (
+      payload: CategoryCreate,
+      userId: number
+    ): Promise<Category> => {
+      return await prisma.category.create({ data: { ...payload, userId } });
     };
-
+  
     public delete = async (categoryId: number): Promise<void> => {
-        await prisma.category.delete({ where: { id: categoryId } });
+      await prisma.category.delete({ where: { id: categoryId } });
     };
-};
+  }
